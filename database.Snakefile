@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-#############
-# FUNCTIONS #
-#############
-
 ###########
 # GLOBALS #
 ###########
@@ -15,6 +11,8 @@ biopython = 'shub://TomHarrop/singularity-containers:biopython_1.73'
 # MAIN #
 ########
 
+email = config['email'] if 'email' in config else ''
+
 #########
 # RULES #
 #########
@@ -22,10 +20,6 @@ biopython = 'shub://TomHarrop/singularity-containers:biopython_1.73'
 wildcard_constraints:
     gene_name = '\w+',
     txid = '\d+'
-
-rule target:
-    input:
-        'output/010_database/its1-58024_dada2.fa'
 
 rule convert_fa_to_dada2:
     input:
@@ -60,7 +54,7 @@ rule download_its_sequences:
     params:
         search_term = lambda wildcards:
             f'{wildcards.gene_name}[Title] AND txid{wildcards.txid}[Organism]',
-        email = config['e']
+        email = email
     output:
         fa = 'output/010_database/{gene_name}-{txid}.fa',
         gb = 'output/010_database/{gene_name}-{txid}.gb',

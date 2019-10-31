@@ -37,11 +37,12 @@ def main():
         level=logging.INFO)
 
     # identify myself to Entrez
+    if email == '':
+        raise ValueError('Supply a valid email (e.g. --config e=me@email.com)')
     Entrez.email = email
 
     logging.info(f'search_term: {search_term}')
     logging.info(f'      email: {email}')
-
 
     # initial search to get the number of hits and webenv
     with Entrez.esearch(db='nucleotide',
