@@ -38,7 +38,8 @@ def main():
 
     # identify myself to Entrez
     if email == '':
-        raise ValueError('Supply a valid email (e.g. --config e=me@email.com)')
+        raise ValueError(('Supply a valid email '
+                          '(e.g. --config email=me@email.com)')
     Entrez.email = email
 
     logging.info(f'search_term: {search_term}')

@@ -50,7 +50,7 @@ rule map_accession_to_taxonomy:
     script:
         'src/map_accession_to_taxonomy.R'
 
-rule download_its_sequences:
+rule download_amp_sequences:
     params:
         search_term = lambda wildcards:
             f'{wildcards.gene_name}[Title] AND txid{wildcards.txid}[Organism]',
@@ -60,11 +60,11 @@ rule download_its_sequences:
         gb = 'output/010_database/{gene_name}-{txid}.gb',
         acc_to_taxa = 'output/010_database/{gene_name}-{txid}_acctotax.csv'
     log:
-        'output/logs/010_database/download-its-sequences_{gene_name}-{txid}.log'
+        'output/logs/010_database/download-amp-sequences_{gene_name}-{txid}.log'
     singularity:
         biopython
     script:
-        'src/download_its_sequences.py'
+        'src/download_amp_sequences.py'
 
 rule download_ncbi_taxonomy_db:
     output:
