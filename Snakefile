@@ -30,14 +30,12 @@ its_f = 'ATGCGATACTTGGTGTGAAT'
 its_r = 'GACGCTTCTCCAGACTACAAT'
 
 # singularity
-# bioconductor = 'shub://TomHarrop/singularity-containers:bioconductor_3.9'
-# biopython = 'shub://TomHarrop/singularity-containers:biopython_1.73'
-# cutadapt = 'shub://TomHarrop/singularity-containers:cutadapt_2.6'
-bioconductor = '/home/tom/Projects/singularity-containers/img/bioconductor_3.9.sif'
-biopython = 'shub://TomHarrop/singularity-containers:biopython_1.73'
-cutadapt = '/home/tom/Projects/singularity-containers/img/cutadapt_2.6.sif'
-
-
+bioconductor = ('shub://TomHarrop/singularity-containers:bioconductor_3.9'
+                '@752a9788043f6a471665da4e270cd870')
+biopython = ('shub://TomHarrop/singularity-containers:biopython_1.73'
+             '@4a2a83e0cdff509c33227ef55906c72c')
+cutadapt = ('shub://TomHarrop/singularity-containers:cutadapt_2.6'
+            '@4154a4f91aee91acf5d5db67820eaa7a')
 
 ########
 # MAIN #
@@ -50,7 +48,7 @@ sample_data = pandas.read_excel(
     nrows=80)
 
 all_libs = sorted(set(sample_data.to_dict()['Library ID'].values()))
-# all_libs = all_libs[1:5] # subset!
+# all_libs = all_libs[1:5] # to subset
 
 all_sample_nos = [int(x.split('-')[1]) for x in all_libs]
 
@@ -64,10 +62,23 @@ subworkflow database:
 
 rule target:
     input:
-        'output/030_dada2/taxa.Rds'
+        'output/030_dada2/taxa_with_counts.csv'
 
 
 # run dada2 workflow
+rule merge_taxa_with_counts:
+    input:
+        nochim = 'output/030_dada2/seqtab_nochim.Rds',
+        taxa = 'output/030_dada2/taxa.Rds',
+    output:
+        taxa_with_counts = 'output/030_dada2/taxa_with_counts.csv'
+    log:
+        'output/logs/030_dada2/merge_taxa_with_counts.log'
+    singularity:
+        bioconductor
+    script:
+        'src/merge_taxa_with_counts.R'
+
 rule run_dada2:
     input:
         r1 = expand('output/020_preprocess/s{sample_number}_cutadapt_r1.fq.gz',
@@ -88,7 +99,7 @@ rule run_dada2:
     singularity:
         bioconductor
     script:
-        'src/run_dada2.R' 
+        'src/run_dada2.R'
 
 
 # use cutadapt as recommended
@@ -135,7 +146,4 @@ rule d2_filter_and_trim:
         bioconductor
     script:
         'src/d2_filter_and_trim.R'
-
-
-
 
