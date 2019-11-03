@@ -4,8 +4,10 @@
 # GLOBALS #
 ###########
 
-bioconductor = 'shub://TomHarrop/singularity-containers:bioconductor_3.9'
-biopython = 'shub://TomHarrop/singularity-containers:biopython_1.73'
+bioconductor = ('shub://TomHarrop/singularity-containers:bioconductor_3.9'
+                '@752a9788043f6a471665da4e270cd870')
+biopython = ('shub://TomHarrop/singularity-containers:biopython_1.73'
+             '@4a2a83e0cdff509c33227ef55906c72c')
 
 ########
 # MAIN #
