@@ -27,7 +27,7 @@ def get_fastq_paths(wildcards):
 sample_table = 'data/OG3633-01.xlsx'
 
 its_f = 'ATGCGATACTTGGTGTGAAT'
-its_r = 'ATGCGATACTTGGTGTGAAT'
+its_r = 'GACGCTTCTCCAGACTACAAT'
 
 # singularity
 # bioconductor = 'shub://TomHarrop/singularity-containers:bioconductor_3.9'
