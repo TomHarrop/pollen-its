@@ -24,9 +24,9 @@ def get_fastq_paths(wildcards):
     if int(sample_number) > 80:
         return ({
             'r1': (f'data/reads/CT9ND-3633-{int(sample_number):03}-00-01_'
-                   f'S{int(sample_number) - 81}_L001_R1_001.fastq.gz'),
+                   f'S{int(sample_number) - 80}_L001_R1_001.fastq.gz'),
             'r2': (f'data/reads/CT9ND-3633-{int(sample_number):03}-00-01_'
-                   f'S{int(sample_number) - 81}_L001_R2_001.fastq.gz')})
+                   f'S{int(sample_number) - 80}_L001_R2_001.fastq.gz')})
 
 
 ###########
