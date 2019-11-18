@@ -4,6 +4,8 @@
 # GLOBALS #
 ###########
 
+configfile: "config.yaml"
+
 bioconductor = ('shub://TomHarrop/singularity-containers:bioconductor_3.9'
                 '@752a9788043f6a471665da4e270cd870')
 biopython = ('shub://TomHarrop/singularity-containers:biopython_1.73'
