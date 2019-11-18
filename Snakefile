@@ -15,9 +15,18 @@ def rc(x):
 
 def get_fastq_paths(wildcards):
     sample_number = wildcards.sample_number
-    return ({
-        'r1': f'data/reads/CL7MN-3633-{int(sample_number):02}-0-1_S{sample_number}_L001_R1_001.fastq.gz',
-        'r2': f'data/reads/CL7MN-3633-{int(sample_number):02}-0-1_S{sample_number}_L001_R2_001.fastq.gz'})
+    if int(sample_number) < 81:
+        return ({
+            'r1': (f'data/reads/CL7MN-3633-{int(sample_number):02}-0-1_'
+                   f'S{sample_number}_L001_R1_001.fastq.gz'),
+            'r2': (f'data/reads/CL7MN-3633-{int(sample_number):02}-0-1_'
+                   f'S{sample_number}_L001_R2_001.fastq.gz')})
+    if int(sample_number) > 80:
+        return ({
+            'r1': (f'data/reads/CL7MN-3633-{int(sample_number):03}-00-01_'
+                   f'S{sample_number - 81}_L001_R1_001.fastq.gz'),
+            'r2': (f'data/reads/CL7MN-3633-{int(sample_number):03}-00-01_'
+                   f'S{sample_number - 81}_L001_R2_001.fastq.gz')})
 
 
 ###########
