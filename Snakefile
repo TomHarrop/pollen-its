@@ -24,7 +24,8 @@ def get_fastq_paths(wildcards):
 # GLOBALS #
 ###########
 
-sample_table = 'data/OG3633-01.xlsx'
+p1_sample_table = 'data/OG3633-01.xlsx'
+p2_sample_table = 'data/OG3633-P2.xlsx'
 
 its_f = 'ATGCGATACTTGGTGTGAAT'
 its_r = 'GACGCTTCTCCAGACTACAAT'
@@ -42,12 +43,19 @@ cutadapt = ('shub://TomHarrop/singularity-containers:cutadapt_2.6'
 ########
 
 # read the sample table
-sample_data = pandas.read_excel(
-    sample_table,
+p1_sample_data = pandas.read_excel(
+    p1_sample_table,
     skiprows=list(range(0, 44)),
     nrows=80)
+p2_sample_data = pandas.read_excel(
+    p2_sample_table,
+    skiprows=list(range(0, 44)),
+    nrows=96)
 
-all_libs = sorted(set(sample_data.to_dict()['Library ID'].values()))
+p1_libs = sorted(set(p1_sample_data.to_dict()['Library ID'].values()))
+p2_libs = sorted(set(p2_sample_data.to_dict()['Library ID'].values()))
+
+all_libs = sorted(set(p1_libs + p2_libs))
 # all_libs = all_libs[1:5] # to subset
 
 all_sample_nos = [int(x.split('-')[1]) for x in all_libs]
