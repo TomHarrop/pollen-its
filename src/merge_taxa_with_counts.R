@@ -35,7 +35,7 @@ col_order <- c("asv_id",
 	"Family",
 	"Genus",
 	"Species",
-	paste0("s", 1:80),
+	paste0("s", 1:176),
 	"seq")
 setcolorder(taxa_with_counts, col_order)
 
